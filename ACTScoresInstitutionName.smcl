@@ -1,0 +1,44 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\ACTScoresInstitutionName.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}12 Feb 2022, 15:52:32
+{txt}
+{com}. 
+. *Define the directory
+. global PATH "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles"
+{txt}
+{com}. cd $PATH
+{res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles
+{txt}
+{com}. 
+. *Open data downloaded from IPEDS on SAT scores by institution
+. import delimited "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\rawdata\ACTScoresInstitutionName.csv"
+{res}{text}(8 vars, 232 obs)
+
+{com}. 
+. *drop other test scores except for ACT composite 
+. drop satwriting75thpercentilescoreadm satmath75thpercentilescoreadm201 satcriticalreading75thpercentile actcomposite25thpercentilescorea v8
+{txt}
+{com}. 
+. *rename variables to prepare dataset for merge and creation of college selectivity variable
+. rename unitid college 
+{res}{txt}
+{com}. 
+. rename actcomposite75thpercentilescorea act75p
+{res}{txt}
+{com}. 
+. *save dataset
+. save "ACTScoresInstitutionName.dta"
+{txt}file ACTScoresInstitutionName.dta saved
+
+{com}. 
+. log close 
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\ACTScoresInstitutionName.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}12 Feb 2022, 15:52:32
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

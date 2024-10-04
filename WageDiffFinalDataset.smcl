@@ -1,0 +1,232 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\WageDiffFinalDataset.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}12 Feb 2022, 16:15:50
+{txt}
+{com}. 
+. *Define the directory
+. global PATH "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles"
+{txt}
+{com}. cd $PATH
+{res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles
+{txt}
+{com}. 
+. use "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles\WageDiffDataNoSelectivity.dta"
+{txt}
+{com}. 
+. merge m:1 college using "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles\SATScoresInstitutionName.dta"
+{res}{txt}{p 0 7 2}
+(note: variable
+college was 
+float, now double to accommodate using data's values)
+{p_end}
+
+{col 5}Result{col 38}# of obs.
+{col 5}{hline 41}
+{col 5}not matched{col 30}{res}             333
+{txt}{col 9}from master{col 30}{res}             333{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}matched{col 30}{res}             718{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge 
+{txt}
+{com}. 
+. merge m:1 college using "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles\ACTScoresInstitutionName.dta"
+{res}{txt}{p 0 7 2}
+(note: variable
+institutionname was 
+str55, now str60 to accommodate using data's values)
+{p_end}
+
+{col 5}Result{col 38}# of obs.
+{col 5}{hline 41}
+{col 5}not matched{col 30}{res}             659
+{txt}{col 9}from master{col 30}{res}             659{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}matched{col 30}{res}             392{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. *create college selectivity variable 
+. generate collegeselectivity = satmath75p + satreadwrite75p
+{txt}(439 missing values generated)
+
+{com}. 
+. *convert ACT composite score to SAT 1600 point scale
+. replace collegeselectivity = 930 if act75p == 17
+{txt}(3 real changes made)
+
+{com}. 
+. replace collegeselectivity = 970 if act75p == 18
+{txt}(2 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1010 if act75p == 19 
+{txt}(5 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1040 if act75p == 20
+{txt}(13 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1080 if act75p == 21
+{txt}(6 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1110 if act75p == 22
+{txt}(15 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1140 if act75p == 23
+{txt}(26 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1180 if act75p == 24
+{txt}(20 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1210 if act75p == 25
+{txt}(39 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1240 if act75p == 26
+{txt}(51 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1280 if act75p == 27
+{txt}(12 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1310 if act75p == 28
+{txt}(27 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1340 if act75p == 29
+{txt}(6 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1370 if act75p == 30
+{txt}(16 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1400 if act75p == 31
+{txt}(5 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1430 if act75p == 32
+{txt}(0 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1460 if act75p == 33
+{txt}(0 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1500 if act75p == 34 
+{txt}(0 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1540 if act75p == 35
+{txt}(2 real changes made)
+
+{com}. 
+. replace collegeselectivity = 1590 if act75p == 36
+{txt}(0 real changes made)
+
+{com}. 
+. *create college selectivity and attitudes toward hard work interaction variable 
+. generate selectivityandhardwork = collegeselectivity*attitudehardworkscore
+{txt}(191 missing values generated)
+
+{com}. 
+. *create race variable 
+. generate race=0
+{txt}
+{com}. 
+. replace race = 1 if raceethnicity == 1| raceethnicity == 2| raceethnicity == 3
+{txt}(331 real changes made)
+
+{com}. 
+. label define racialgroup 0 "white" 1 "marginalized"
+{txt}
+{com}. 
+. label values race racialgroup
+{txt}
+{com}. 
+. *create major dummies for liberal arts, general sciences, and humanities and business/marketing/management
+. 
+. generate libartsgensciencehumanities = 0
+{txt}
+{com}. 
+. generate businessmarketingmanagement = 0
+{txt}
+{com}. 
+. replace libartsgensciencehumanities = 1 if major1 == 124| major2 == 124
+{txt}(416 real changes made)
+
+{com}. 
+. replace businessmarketingmanagement = 1 if major1 == 152| major2 == 152
+{txt}(73 real changes made)
+
+{com}. 
+. *create experience in years, experience squared and experience to the fourth power
+. generate experienceyears = experience/52.143
+{txt}
+{com}. 
+. generate experienceyearssq = experienceyears*experienceyears
+{txt}
+{com}. 
+. generate experienceyearsquart = experienceyears*experienceyears*experienceyears*experienceyears
+{txt}
+{com}. 
+. *label new variables
+. label variable satmath75p "SAT math 75th percentile score"
+{txt}
+{com}. 
+. label variable satreadwrite75p "SAT reading and writing 75th percentile score"
+{txt}
+{com}. 
+. label variable institutionname "name of undergraduate institution"
+{txt}
+{com}. 
+. label variable collegeselectivity "composite of 75th percentile SAT math and reading/writing scores"
+{txt}
+{com}. 
+. label variable selectivityandhardwork "interaction between college selectivity and hard work"
+{txt}
+{com}. 
+. label variable race "racial group"
+{txt}
+{com}. 
+. label variable libartsgensciencehumanities "major 1 or 2 is liberal arts, general sciences, and humanities"
+{txt}
+{com}. 
+. label variable businessmarketingmanagement "major 1 or 2 is business, marketing, and management"
+{txt}
+{com}. 
+. label variable experienceyears "experience in years"
+{txt}
+{com}. 
+. label variable experienceyearsq "experience squared"
+{txt}
+{com}. 
+. label variable experienceyearsquart "experience to the fourth power"
+{txt}
+{com}. 
+. save "WageDiffFinalDataset.dta"
+{txt}file WageDiffFinalDataset.dta saved
+
+{com}. 
+. log close 
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\WageDiffFinalDataset.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}12 Feb 2022, 16:15:50
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

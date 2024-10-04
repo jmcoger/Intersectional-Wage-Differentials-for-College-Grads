@@ -1,0 +1,168 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\WageDiffRegressions.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Nov 2022, 14:08:55
+{txt}
+{com}. 
+. use "WageDiffFinalDataset.dta"
+{txt}
+{com}. 
+. *Define the directory
+. global PATH "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\tables"
+{txt}
+{com}. cd $PATH
+{res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\tables
+{txt}
+{com}. 
+. *Create white variable for decompositions
+. generate white = 0
+{txt}
+{com}. 
+. replace white = 1 if race == 0
+{txt}(720 real changes made)
+
+{com}. 
+. ***Run OLS regressions for each demographic and save the results as a table***
+. 
+. *Regression for marginalized graduates
+. regress logwageincome collegeselectivity selectivityandhardwork experienceyears experienceyearsquart maritalstatus asvabpercentile graduatedegree healthlimitswork businessmarketingmanagement if white == 0
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       253
+{txt}{hline 13}{c +}{hline 34}   F(9, 243)       = {res}     6.28
+{txt}       Model {c |} {res} 20.2258762         9  2.24731958   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 87.0028507       243  .358036423   {txt}R-squared       ={res}    0.1886
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.1586
+{txt}       Total {c |} {res} 107.228727       252  .425510821   {txt}Root MSE        =   {res} .59836
+
+{txt}{hline 28}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}              logwageincome{col 29}{c |}      Coef.{col 41}   Std. Err.{col 53}      t{col 61}   P>|t|{col 69}     [95% Con{col 82}f. Interval]
+{hline 28}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}collegeselectivity {c |}{col 29}{res}{space 2} .0000832{col 41}{space 2} .0003786{col 52}{space 1}    0.22{col 61}{space 3}0.826{col 69}{space 4}-.0006626{col 82}{space 3}  .000829
+{txt}{space 5}selectivityandhardwork {c |}{col 29}{res}{space 2} .0000123{col 41}{space 2} .0000103{col 52}{space 1}    1.19{col 61}{space 3}0.234{col 69}{space 4}-8.04e-06{col 82}{space 3} .0000327
+{txt}{space 12}experienceyears {c |}{col 29}{res}{space 2}-.0165716{col 41}{space 2} .0151385{col 52}{space 1}   -1.09{col 61}{space 3}0.275{col 69}{space 4} -.046391{col 82}{space 3} .0132479
+{txt}{space 7}experienceyearsquart {c |}{col 29}{res}{space 2} 2.58e-06{col 41}{space 2} 1.10e-06{col 52}{space 1}    2.34{col 61}{space 3}0.020{col 69}{space 4} 4.08e-07{col 82}{space 3} 4.75e-06
+{txt}{space 14}maritalstatus {c |}{col 29}{res}{space 2}  .107047{col 41}{space 2} .0770198{col 52}{space 1}    1.39{col 61}{space 3}0.166{col 69}{space 4}-.0446647{col 82}{space 3} .2587587
+{txt}{space 12}asvabpercentile {c |}{col 29}{res}{space 2} .0064318{col 41}{space 2} .0017551{col 52}{space 1}    3.66{col 61}{space 3}0.000{col 69}{space 4} .0029747{col 82}{space 3}  .009889
+{txt}{space 13}graduatedegree {c |}{col 29}{res}{space 2} .2241205{col 41}{space 2} .0803717{col 52}{space 1}    2.79{col 61}{space 3}0.006{col 69}{space 4} .0658063{col 82}{space 3} .3824346
+{txt}{space 11}healthlimitswork {c |}{col 29}{res}{space 2}  .072994{col 41}{space 2} .2505457{col 52}{space 1}    0.29{col 61}{space 3}0.771{col 69}{space 4}-.4205245{col 82}{space 3} .5665125
+{txt}businessmarketingmanagement {c |}{col 29}{res}{space 2} .2476177{col 41}{space 2} .1565138{col 52}{space 1}    1.58{col 61}{space 3}0.115{col 69}{space 4}-.0606792{col 82}{space 3} .5559146
+{txt}{space 22}_cons {c |}{col 29}{res}{space 2} 10.04672{col 41}{space 2} .3472429{col 52}{space 1}   28.93{col 61}{space 3}0.000{col 69}{space 4} 9.362729{col 82}{space 3} 10.73071
+{txt}{hline 28}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. *Save regression results 
+. est sto m1
+{txt}
+{com}. 
+. *Regression for white graduates
+. regress logwageincome collegeselectivity selectivityandhardwork experienceyears experienceyearsquart maritalstatus asvabpercentile graduatedegree healthlimitswork businessmarketingmanagement if white == 1
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       601
+{txt}{hline 13}{c +}{hline 34}   F(9, 591)       = {res}    11.19
+{txt}       Model {c |} {res}  63.536861         9  7.05965122   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 372.832049       591  .630849491   {txt}R-squared       ={res}    0.1456
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.1326
+{txt}       Total {c |} {res}  436.36891       600  .727281517   {txt}Root MSE        =   {res} .79426
+
+{txt}{hline 28}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}              logwageincome{col 29}{c |}      Coef.{col 41}   Std. Err.{col 53}      t{col 61}   P>|t|{col 69}     [95% Con{col 82}f. Interval]
+{hline 28}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}collegeselectivity {c |}{col 29}{res}{space 2} .0005833{col 41}{space 2}  .000376{col 52}{space 1}    1.55{col 61}{space 3}0.121{col 69}{space 4}-.0001552{col 82}{space 3} .0013218
+{txt}{space 5}selectivityandhardwork {c |}{col 29}{res}{space 2} .0000299{col 41}{space 2} 9.12e-06{col 52}{space 1}    3.27{col 61}{space 3}0.001{col 69}{space 4} .0000119{col 82}{space 3} .0000478
+{txt}{space 12}experienceyears {c |}{col 29}{res}{space 2} .0005061{col 41}{space 2} .0148977{col 52}{space 1}    0.03{col 61}{space 3}0.973{col 69}{space 4}-.0287528{col 82}{space 3}  .029765
+{txt}{space 7}experienceyearsquart {c |}{col 29}{res}{space 2} 1.31e-06{col 41}{space 2} 8.95e-07{col 52}{space 1}    1.47{col 61}{space 3}0.143{col 69}{space 4}-4.44e-07{col 82}{space 3} 3.07e-06
+{txt}{space 14}maritalstatus {c |}{col 29}{res}{space 2} .1439355{col 41}{space 2} .0723638{col 52}{space 1}    1.99{col 61}{space 3}0.047{col 69}{space 4}  .001814{col 82}{space 3} .2860569
+{txt}{space 12}asvabpercentile {c |}{col 29}{res}{space 2} .0042078{col 41}{space 2} .0017796{col 52}{space 1}    2.36{col 61}{space 3}0.018{col 69}{space 4} .0007127{col 82}{space 3} .0077028
+{txt}{space 13}graduatedegree {c |}{col 29}{res}{space 2} .2025612{col 41}{space 2} .0688392{col 52}{space 1}    2.94{col 61}{space 3}0.003{col 69}{space 4} .0673619{col 82}{space 3} .3377605
+{txt}{space 11}healthlimitswork {c |}{col 29}{res}{space 2}-.9204836{col 41}{space 2} .2230762{col 52}{space 1}   -4.13{col 61}{space 3}0.000{col 69}{space 4}-1.358602{col 82}{space 3}-.4823651
+{txt}businessmarketingmanagement {c |}{col 29}{res}{space 2} .3130294{col 41}{space 2} .1227859{col 52}{space 1}    2.55{col 61}{space 3}0.011{col 69}{space 4} .0718796{col 82}{space 3} .5541793
+{txt}{space 22}_cons {c |}{col 29}{res}{space 2} 8.810303{col 41}{space 2} .3856553{col 52}{space 1}   22.85{col 61}{space 3}0.000{col 69}{space 4} 8.052881{col 82}{space 3} 9.567725
+{txt}{hline 28}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. *Save regression results
+. est sto m2
+{txt}
+{com}. 
+. *Regression for marginalized women
+. regress logwageincome collegeselectivity selectivityandhardwork experienceyears experienceyearsquart maritalstatus asvabpercentile graduatedegree healthlimitswork businessmarketingmanagement if white == 0 & female == 1
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       150
+{txt}{hline 13}{c +}{hline 34}   F(9, 140)       = {res}     4.13
+{txt}       Model {c |} {res} 13.8977402         9  1.54419336   {txt}Prob > F        ={res}    0.0001
+{txt}    Residual {c |} {res}  52.339214       140  .373851528   {txt}R-squared       ={res}    0.2098
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.1590
+{txt}       Total {c |} {res} 66.2369542       149  .444543317   {txt}Root MSE        =   {res} .61143
+
+{txt}{hline 28}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}              logwageincome{col 29}{c |}      Coef.{col 41}   Std. Err.{col 53}      t{col 61}   P>|t|{col 69}     [95% Con{col 82}f. Interval]
+{hline 28}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}collegeselectivity {c |}{col 29}{res}{space 2} .0001565{col 41}{space 2} .0005147{col 52}{space 1}    0.30{col 61}{space 3}0.762{col 69}{space 4}-.0008612{col 82}{space 3} .0011741
+{txt}{space 5}selectivityandhardwork {c |}{col 29}{res}{space 2} 9.12e-06{col 41}{space 2} .0000143{col 52}{space 1}    0.64{col 61}{space 3}0.525{col 69}{space 4}-.0000192{col 82}{space 3} .0000374
+{txt}{space 12}experienceyears {c |}{col 29}{res}{space 2}-.0107542{col 41}{space 2} .0195457{col 52}{space 1}   -0.55{col 61}{space 3}0.583{col 69}{space 4}-.0493971{col 82}{space 3} .0278887
+{txt}{space 7}experienceyearsquart {c |}{col 29}{res}{space 2} 1.66e-06{col 41}{space 2} 1.42e-06{col 52}{space 1}    1.17{col 61}{space 3}0.245{col 69}{space 4}-1.15e-06{col 82}{space 3} 4.46e-06
+{txt}{space 14}maritalstatus {c |}{col 29}{res}{space 2} .0022313{col 41}{space 2} .1039351{col 52}{space 1}    0.02{col 61}{space 3}0.983{col 69}{space 4} -.203254{col 82}{space 3} .2077166
+{txt}{space 12}asvabpercentile {c |}{col 29}{res}{space 2} .0068498{col 41}{space 2} .0023686{col 52}{space 1}    2.89{col 61}{space 3}0.004{col 69}{space 4} .0021669{col 82}{space 3} .0115327
+{txt}{space 13}graduatedegree {c |}{col 29}{res}{space 2} .3921203{col 41}{space 2} .1043969{col 52}{space 1}    3.76{col 61}{space 3}0.000{col 69}{space 4}  .185722{col 82}{space 3} .5985185
+{txt}{space 11}healthlimitswork {c |}{col 29}{res}{space 2}-.2216279{col 41}{space 2} .3827966{col 52}{space 1}   -0.58{col 61}{space 3}0.564{col 69}{space 4}-.9784374{col 82}{space 3} .5351816
+{txt}businessmarketingmanagement {c |}{col 29}{res}{space 2} .2024066{col 41}{space 2} .2487036{col 52}{space 1}    0.81{col 61}{space 3}0.417{col 69}{space 4}-.2892938{col 82}{space 3} .6941069
+{txt}{space 22}_cons {c |}{col 29}{res}{space 2} 9.930133{col 41}{space 2} .4599491{col 52}{space 1}   21.59{col 61}{space 3}0.000{col 69}{space 4} 9.020789{col 82}{space 3} 10.83948
+{txt}{hline 28}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. *Save regression results
+. est sto m3
+{txt}
+{com}. 
+. *Regression for white men 
+. regress logwageincome collegeselectivity selectivityandhardwork experienceyears experienceyearsquart maritalstatus asvabpercentile graduatedegree healthlimitswork businessmarketingmanagement if white == 1 & female == 0
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       288
+{txt}{hline 13}{c +}{hline 34}   F(9, 278)       = {res}    12.47
+{txt}       Model {c |} {res} 35.9065901         9  3.98962112   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 88.9476149       278  .319955449   {txt}R-squared       ={res}    0.2876
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.2645
+{txt}       Total {c |} {res} 124.854205       287  .435032073   {txt}Root MSE        =   {res} .56565
+
+{txt}{hline 28}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}              logwageincome{col 29}{c |}      Coef.{col 41}   Std. Err.{col 53}      t{col 61}   P>|t|{col 69}     [95% Con{col 82}f. Interval]
+{hline 28}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}collegeselectivity {c |}{col 29}{res}{space 2} .0007725{col 41}{space 2} .0003929{col 52}{space 1}    1.97{col 61}{space 3}0.050{col 69}{space 4}-9.53e-07{col 82}{space 3} .0015459
+{txt}{space 5}selectivityandhardwork {c |}{col 29}{res}{space 2} .0000312{col 41}{space 2} 9.21e-06{col 52}{space 1}    3.39{col 61}{space 3}0.001{col 69}{space 4} .0000131{col 82}{space 3} .0000494
+{txt}{space 12}experienceyears {c |}{col 29}{res}{space 2}-.0080469{col 41}{space 2} .0154516{col 52}{space 1}   -0.52{col 61}{space 3}0.603{col 69}{space 4}-.0384639{col 82}{space 3} .0223702
+{txt}{space 7}experienceyearsquart {c |}{col 29}{res}{space 2} 8.35e-07{col 41}{space 2} 9.57e-07{col 52}{space 1}    0.87{col 61}{space 3}0.384{col 69}{space 4}-1.05e-06{col 82}{space 3} 2.72e-06
+{txt}{space 14}maritalstatus {c |}{col 29}{res}{space 2} .3125925{col 41}{space 2} .0778117{col 52}{space 1}    4.02{col 61}{space 3}0.000{col 69}{space 4} .1594176{col 82}{space 3} .4657674
+{txt}{space 12}asvabpercentile {c |}{col 29}{res}{space 2} .0024358{col 41}{space 2} .0019259{col 52}{space 1}    1.26{col 61}{space 3}0.207{col 69}{space 4}-.0013554{col 82}{space 3}  .006227
+{txt}{space 13}graduatedegree {c |}{col 29}{res}{space 2} .0806434{col 41}{space 2} .0735239{col 52}{space 1}    1.10{col 61}{space 3}0.274{col 69}{space 4}-.0640909{col 82}{space 3} .2253777
+{txt}{space 11}healthlimitswork {c |}{col 29}{res}{space 2}-1.572676{col 41}{space 2} .3380605{col 52}{space 1}   -4.65{col 61}{space 3}0.000{col 69}{space 4} -2.23816{col 82}{space 3}-.9071927
+{txt}businessmarketingmanagement {c |}{col 29}{res}{space 2} .1643722{col 41}{space 2} .1294197{col 52}{space 1}    1.27{col 61}{space 3}0.205{col 69}{space 4}-.0903948{col 82}{space 3} .4191392
+{txt}{space 22}_cons {c |}{col 29}{res}{space 2} 9.048482{col 41}{space 2} .4130503{col 52}{space 1}   21.91{col 61}{space 3}0.000{col 69}{space 4} 8.235379{col 82}{space 3} 9.861586
+{txt}{hline 28}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. *Save regression results
+. est sto m4
+{txt}
+{com}. 
+. *Save output results for marginalized and white graduates in a table
+. esttab m1 m2 using WageDiffRegressionsMargWhite.tex, keep (collegeselectivity selectivityandhardwork experienceyears experienceyearsquart maritalstatus asvabpercentile graduatedegree healthlimitswork businessmarketingmanagement) cells(b(star fmt(3)) se(fmt(3) par)) starlevels(* .1 ** .05 *** .01 **** .001) obslast stats(r2 N, ///
+> labels("R^2")) legend nolabel nonumber title("Regressions for College Graduate KOB Decompositions") mtitles("Marginalized" "White")
+{res}{txt}(output written to {browse  `"WageDiffRegressionsMargWhite.tex"'})
+
+{com}. 
+. *Save output results for marginalized womena and white men in a table
+. esttab m3 m4 using WageDiffRegressionsMargWomenWhiteMen.tex, keep (collegeselectivity selectivityandhardwork experienceyears experienceyearsquart maritalstatus asvabpercentile graduatedegree healthlimitswork businessmarketingmanagement) cells(b(star fmt(3)) se(fmt(3) par)) starlevels(* .1 ** .05 *** .01 **** .001) obslast stats(r2 N, ///
+> labels("R^2")) legend nolabel nonumber title("Regressions for College Graduate KOB Decompositions") mtitles("Marginalized Women" "White Men")
+{res}{txt}(output written to {browse  `"WageDiffRegressionsMargWomenWhiteMen.tex"'})
+
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\WageDiffRegressions.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}22 Nov 2022, 14:08:56
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

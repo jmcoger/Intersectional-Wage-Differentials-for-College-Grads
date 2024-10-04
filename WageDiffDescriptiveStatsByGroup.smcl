@@ -1,0 +1,918 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\WageDiffDescriptiveStatsByGroup.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}29 Aug 2022, 13:14:28
+{txt}
+{com}. 
+. *install estout package
+. ssc install estout, replace
+{txt}checking {hilite:estout} consistency and verifying not already installed...
+all files already exist and are up to date.
+
+{com}. 
+. which estout  // check versions
+{txt}C:\Users\jcoger\ado\plus\e\estout.ado
+{res}*! version 3.30  25mar2022  Ben Jann
+{txt}
+{com}. 
+. which esttab
+{txt}C:\Users\jcoger\ado\plus\e\esttab.ado
+{res}*! version 2.1.0  19may2021  Ben Jann
+*! wrapper for estout
+{txt}
+{com}. 
+. *Define the directory
+. global PATH "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\tables"
+{txt}
+{com}. cd $PATH
+{res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\tables
+{txt}
+{com}. 
+. *open final dataset 
+. use "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles\WageDiffFinalDataset.dta"
+{txt}
+{com}. 
+. *Delete cases without collegeselectivityardworkscore data
+. keep if collegeselectivity != .
+{txt}(191 observations deleted)
+
+{com}. 
+. *Create white variable
+. generate white = 0
+{txt}
+{com}. 
+. replace white = 1 if race == 0
+{txt}(607 real changes made)
+
+{com}. 
+. *Drop observations with zeroes for wageincome
+. drop if wageincome < = 0
+{txt}(6 observations deleted)
+
+{com}. 
+. **Create table for pooled sample descriptive statistics
+. tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome white, c(stat) stat(mean sd min max n)
+
+{txt}{ralign 12:variable} {...}
+{c |}      mean        sd       min       max         N
+{hline 13}{c +}{hline 50}
+{ralign 12:age} {...}
+{c |}{...}
+ {res} 36.89813  1.391709        35        39       854
+{txt}{ralign 12:asvabperce~e} {...}
+{c |}{...}
+ {res} 70.32946  22.50783     2.995       100       854
+{txt}{ralign 12:attitudeha~e} {...}
+{c |}{...}
+ {res} 24.55621  2.979965        10        28       854
+{txt}{ralign 12:businessma~t} {...}
+{c |}{...}
+ {res} .0737705  .2615502         0         1       854
+{txt}{ralign 12:collegesel~y} {...}
+{c |}{...}
+ {res} 1226.309  130.7493       873      1590       854
+{txt}{ralign 12:experience~s} {...}
+{c |}{...}
+ {res} 16.83842  4.359875         0  24.72048       854
+{txt}{ralign 12:experienc~rt} {...}
+{c |}{...}
+ {res} 105554.8  68347.86         0  373445.8       854
+{txt}{ralign 12:female} {...}
+{c |}{...}
+ {res} .5421546  .4985118         0         1       854
+{txt}{ralign 12:healthlimi~k} {...}
+{c |}{...}
+ {res} .0222482  .1475763         0         1       854
+{txt}{ralign 12:graduatede~e} {...}
+{c |}{...}
+ {res} .3688525  .4827766         0         1       854
+{txt}{ralign 12:logwageinc~e} {...}
+{c |}{...}
+ {res}  11.0696  .7991111  5.298317  12.70214       854
+{txt}{ralign 12:maritalsta~s} {...}
+{c |}{...}
+ {res}   .64637  .4783762         0         1       854
+{txt}{ralign 12:wageincome} {...}
+{c |}{...}
+ {res} 84070.61  68385.38       200    328451       854
+{txt}{ralign 12:white} {...}
+{c |}{...}
+ {res} .7037471  .4568715         0         1       854
+{txt}{hline 13}{c BT}{hline 50}
+
+{com}. 
+. ereturn list
+{txt}
+{com}. 
+. est clear  // clear the est locals
+{txt}
+{com}. 
+. estpost tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome white, c(stat) stat(mean sd min max n)
+
+{txt}Summary statistics: mean sd min max count
+     for variables: age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome white
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(count)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:age}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 36.89813}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.391709}}}{space 1}{space 1}{ralign 9:{res:{sf:       35}}}{space 1}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:asvabperce~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 70.32946}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.50783}}}{space 1}{space 1}{ralign 9:{res:{sf:    2.995}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:attitudeha~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 24.55621}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.979965}}}{space 1}{space 1}{ralign 9:{res:{sf:       10}}}{space 1}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:businessma~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0737705}}}{space 1}{space 1}{ralign 9:{res:{sf: .2615502}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:collegesel~y}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1226.309}}}{space 1}{space 1}{ralign 9:{res:{sf: 130.7493}}}{space 1}{space 1}{ralign 9:{res:{sf:      873}}}{space 1}{space 1}{ralign 9:{res:{sf:     1590}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:experience~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 16.83842}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.359875}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.72048}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:experienc~rt}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 105554.8}}}{space 1}{space 1}{ralign 9:{res:{sf: 68347.86}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 373445.8}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:female}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5421546}}}{space 1}{space 1}{ralign 9:{res:{sf: .4985118}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:healthlimi~k}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0222482}}}{space 1}{space 1}{ralign 9:{res:{sf: .1475763}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:graduatede~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3688525}}}{space 1}{space 1}{ralign 9:{res:{sf: .4827766}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:logwageinc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  11.0696}}}{space 1}{space 1}{ralign 9:{res:{sf: .7991111}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.298317}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.70214}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:maritalsta~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   .64637}}}{space 1}{space 1}{ralign 9:{res:{sf: .4783762}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:wageincome}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 84070.61}}}{space 1}{space 1}{ralign 9:{res:{sf: 68385.38}}}{space 1}{space 1}{ralign 9:{res:{sf:      200}}}{space 1}{space 1}{ralign 9:{res:{sf:   328451}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+{space 0}{space 0}{ralign 12:white}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7037471}}}{space 1}{space 1}{ralign 9:{res:{sf: .4568715}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      854}}}{space 1}
+
+{com}. 
+. esttab, ///
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs collabels("Mean" "SD" "Min" "Max" "N")
+{res}
+{txt}{hline 77}
+{txt}                     Mean           SD          Min          Max            N
+{txt}{hline 77}
+{txt}age         {res}        36.90         1.39        35.00        39.00       854.00{txt}
+{txt}asvabperce~e{res}        70.33        22.51         2.99       100.00       854.00{txt}
+{txt}attitudeha~e{res}        24.56         2.98        10.00        28.00       854.00{txt}
+{txt}businessma~t{res}         0.07         0.26         0.00         1.00       854.00{txt}
+{txt}collegesel~y{res}     1,226.31       130.75       873.00     1,590.00       854.00{txt}
+{txt}experience~s{res}        16.84         4.36         0.00        24.72       854.00{txt}
+{txt}experienc~rt{res}   105,554.82    68,347.86         0.00   373,445.81       854.00{txt}
+{txt}female      {res}         0.54         0.50         0.00         1.00       854.00{txt}
+{txt}healthlimi~k{res}         0.02         0.15         0.00         1.00       854.00{txt}
+{txt}graduatede~e{res}         0.37         0.48         0.00         1.00       854.00{txt}
+{txt}logwageinc~e{res}        11.07         0.80         5.30        12.70       854.00{txt}
+{txt}maritalsta~s{res}         0.65         0.48         0.00         1.00       854.00{txt}
+{txt}wageincome  {res}    84,070.61    68,385.38       200.00   328,451.00       854.00{txt}
+{txt}white       {res}         0.70         0.46         0.00         1.00       854.00{txt}
+{txt}{hline 77}
+
+{com}. 
+. *export table as LaTeX file
+. esttab using "./WageDiffPooledDescriptives.tex", replace ////
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs booktabs f ///
+>   collabels("Mean" "SD" "Min" "Max" "N")
+{res}{txt}(note: file ./WageDiffPooledDescriptives.tex not found)
+(output written to {browse  `"./WageDiffPooledDescriptives.tex"'})
+
+{com}. 
+. **create table ouput for white group descriptive statistics
+. tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 1, c(stat) stat(mean sd min max n)
+
+{txt}{ralign 12:variable} {...}
+{c |}      mean        sd       min       max         N
+{hline 13}{c +}{hline 50}
+{ralign 12:age} {...}
+{c |}{...}
+ {res} 36.89018  1.380068        35        39       601
+{txt}{ralign 12:asvabperce~e} {...}
+{c |}{...}
+ {res} 75.51414  19.66633    12.912       100       601
+{txt}{ralign 12:attitudeha~e} {...}
+{c |}{...}
+ {res}  24.4376  2.928569        14        28       601
+{txt}{ralign 12:businessma~t} {...}
+{c |}{...}
+ {res}  .078203  .2687144         0         1       601
+{txt}{ralign 12:collegesel~y} {...}
+{c |}{...}
+ {res} 1242.083  123.3903       910      1590       601
+{txt}{ralign 12:experience~s} {...}
+{c |}{...}
+ {res} 17.10565  4.193305         0  24.72048       601
+{txt}{ralign 12:experienc~rt} {...}
+{c |}{...}
+ {res} 110021.2  69886.65         0  373445.8       601
+{txt}{ralign 12:female} {...}
+{c |}{...}
+ {res} .5207987  .4999834         0         1       601
+{txt}{ralign 12:healthlimi~k} {...}
+{c |}{...}
+ {res} .0216306  .1455953         0         1       601
+{txt}{ralign 12:graduatede~e} {...}
+{c |}{...}
+ {res} .3677205  .4825864         0         1       601
+{txt}{ralign 12:logwageinc~e} {...}
+{c |}{...}
+ {res} 11.09299   .852808  5.298317  12.70214       601
+{txt}{ralign 12:maritalsta~s} {...}
+{c |}{...}
+ {res} .7054908  .4562015         0         1       601
+{txt}{ralign 12:wageincome} {...}
+{c |}{...}
+ {res} 87784.19   71672.8       200    328451       601
+{txt}{hline 13}{c BT}{hline 50}
+
+{com}. 
+. ereturn list
+
+{txt}scalars:
+                  e(N) =  {res}854
+
+{txt}macros:
+                e(cmd) : "{res}estpost{txt}"
+             e(subcmd) : "{res}tabstat{txt}"
+              e(stats) : "{res}mean sd min max count{txt}"
+               e(vars) : "{res}age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity{txt}.."
+
+matrices:
+               e(mean) : {res} 1 x 14
+                 {txt}e(sd) : {res} 1 x 14
+                {txt}e(min) : {res} 1 x 14
+                {txt}e(max) : {res} 1 x 14
+              {txt}e(count) : {res} 1 x 14
+{txt}
+{com}. 
+. est clear  // clear the est locals
+{txt}
+{com}. 
+. estpost tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 1, c(stat) stat(mean sd min max n)
+
+{txt}Summary statistics: mean sd min max count
+     for variables: age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(count)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:age}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 36.89018}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.380068}}}{space 1}{space 1}{ralign 9:{res:{sf:       35}}}{space 1}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:asvabperce~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 75.51414}}}{space 1}{space 1}{ralign 9:{res:{sf: 19.66633}}}{space 1}{space 1}{ralign 9:{res:{sf:   12.912}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:attitudeha~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  24.4376}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.928569}}}{space 1}{space 1}{ralign 9:{res:{sf:       14}}}{space 1}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:businessma~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  .078203}}}{space 1}{space 1}{ralign 9:{res:{sf: .2687144}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:collegesel~y}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1242.083}}}{space 1}{space 1}{ralign 9:{res:{sf: 123.3903}}}{space 1}{space 1}{ralign 9:{res:{sf:      910}}}{space 1}{space 1}{ralign 9:{res:{sf:     1590}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:experience~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 17.10565}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.193305}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.72048}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:experienc~rt}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 110021.2}}}{space 1}{space 1}{ralign 9:{res:{sf: 69886.65}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 373445.8}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:female}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5207987}}}{space 1}{space 1}{ralign 9:{res:{sf: .4999834}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:healthlimi~k}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0216306}}}{space 1}{space 1}{ralign 9:{res:{sf: .1455953}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:graduatede~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3677205}}}{space 1}{space 1}{ralign 9:{res:{sf: .4825864}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:logwageinc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 11.09299}}}{space 1}{space 1}{ralign 9:{res:{sf:  .852808}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.298317}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.70214}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:maritalsta~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7054908}}}{space 1}{space 1}{ralign 9:{res:{sf: .4562015}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+{space 0}{space 0}{ralign 12:wageincome}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 87784.19}}}{space 1}{space 1}{ralign 9:{res:{sf:  71672.8}}}{space 1}{space 1}{ralign 9:{res:{sf:      200}}}{space 1}{space 1}{ralign 9:{res:{sf:   328451}}}{space 1}{space 1}{ralign 9:{res:{sf:      601}}}{space 1}
+
+{com}. 
+. esttab, ///
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs collabels("Mean" "SD" "Min" "Max" "N")
+{res}
+{txt}{hline 77}
+{txt}                     Mean           SD          Min          Max            N
+{txt}{hline 77}
+{txt}age         {res}        36.89         1.38        35.00        39.00       601.00{txt}
+{txt}asvabperce~e{res}        75.51        19.67        12.91       100.00       601.00{txt}
+{txt}attitudeha~e{res}        24.44         2.93        14.00        28.00       601.00{txt}
+{txt}businessma~t{res}         0.08         0.27         0.00         1.00       601.00{txt}
+{txt}collegesel~y{res}     1,242.08       123.39       910.00     1,590.00       601.00{txt}
+{txt}experience~s{res}        17.11         4.19         0.00        24.72       601.00{txt}
+{txt}experienc~rt{res}   110,021.22    69,886.65         0.00   373,445.81       601.00{txt}
+{txt}female      {res}         0.52         0.50         0.00         1.00       601.00{txt}
+{txt}healthlimi~k{res}         0.02         0.15         0.00         1.00       601.00{txt}
+{txt}graduatede~e{res}         0.37         0.48         0.00         1.00       601.00{txt}
+{txt}logwageinc~e{res}        11.09         0.85         5.30        12.70       601.00{txt}
+{txt}maritalsta~s{res}         0.71         0.46         0.00         1.00       601.00{txt}
+{txt}wageincome  {res}    87,784.19    71,672.80       200.00   328,451.00       601.00{txt}
+{txt}{hline 77}
+
+{com}. 
+. *export table as LaTeX file
+. esttab using "./WageDiffWhiteDescriptives.tex", replace ////
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs booktabs f ///
+>   collabels("Mean" "SD" "Min" "Max" "N")
+{res}{txt}(note: file ./WageDiffWhiteDescriptives.tex not found)
+(output written to {browse  `"./WageDiffWhiteDescriptives.tex"'})
+
+{com}.  
+. **create table ouput for marginalized group descriptive statistics
+. tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 0, c(stat) stat(mean sd min max n)
+
+{txt}{ralign 12:variable} {...}
+{c |}      mean        sd       min       max         N
+{hline 13}{c +}{hline 50}
+{ralign 12:age} {...}
+{c |}{...}
+ {res}   36.917   1.42157        35        39       253
+{txt}{ralign 12:asvabperce~e} {...}
+{c |}{...}
+ {res} 58.01328  24.03209     2.995     99.22       253
+{txt}{ralign 12:attitudeha~e} {...}
+{c |}{...}
+ {res} 24.83794  3.086296        10        28       253
+{txt}{ralign 12:businessma~t} {...}
+{c |}{...}
+ {res} .0632411  .2438786         0         1       253
+{txt}{ralign 12:collegesel~y} {...}
+{c |}{...}
+ {res} 1188.838  140.0466       873      1580       253
+{txt}{ralign 12:experience~s} {...}
+{c |}{...}
+ {res} 16.20362  4.679871         0  23.76158       253
+{txt}{ralign 12:experienc~rt} {...}
+{c |}{...}
+ {res} 94944.93  63426.43         0  318787.5       253
+{txt}{ralign 12:female} {...}
+{c |}{...}
+ {res} .5928854  .4922704         0         1       253
+{txt}{ralign 12:healthlimi~k} {...}
+{c |}{...}
+ {res} .0237154  .1524627         0         1       253
+{txt}{ralign 12:graduatede~e} {...}
+{c |}{...}
+ {res} .3715415  .4841746         0         1       253
+{txt}{ralign 12:logwageinc~e} {...}
+{c |}{...}
+ {res} 11.01404  .6523119  8.294049  12.70214       253
+{txt}{ralign 12:maritalsta~s} {...}
+{c |}{...}
+ {res} .5059289  .5009559         0         1       253
+{txt}{ralign 12:wageincome} {...}
+{c |}{...}
+ {res} 75249.02  59057.93      4000    328451       253
+{txt}{hline 13}{c BT}{hline 50}
+
+{com}. 
+. ereturn list
+
+{txt}scalars:
+                  e(N) =  {res}601
+
+{txt}macros:
+                e(cmd) : "{res}estpost{txt}"
+             e(subcmd) : "{res}tabstat{txt}"
+              e(stats) : "{res}mean sd min max count{txt}"
+               e(vars) : "{res}age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity{txt}.."
+
+matrices:
+               e(mean) : {res} 1 x 13
+                 {txt}e(sd) : {res} 1 x 13
+                {txt}e(min) : {res} 1 x 13
+                {txt}e(max) : {res} 1 x 13
+              {txt}e(count) : {res} 1 x 13
+{txt}
+{com}. 
+. est clear  // clear the est locals
+{txt}
+{com}. 
+. estpost tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 0, c(stat) stat(mean sd min max n)
+
+{txt}Summary statistics: mean sd min max count
+     for variables: age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(count)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:age}{space 1}{c |}{space 1}{ralign 9:{res:{sf:   36.917}}}{space 1}{space 1}{ralign 9:{res:{sf:  1.42157}}}{space 1}{space 1}{ralign 9:{res:{sf:       35}}}{space 1}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:asvabperce~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 58.01328}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.03209}}}{space 1}{space 1}{ralign 9:{res:{sf:    2.995}}}{space 1}{space 1}{ralign 9:{res:{sf:    99.22}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:attitudeha~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 24.83794}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.086296}}}{space 1}{space 1}{ralign 9:{res:{sf:       10}}}{space 1}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:businessma~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0632411}}}{space 1}{space 1}{ralign 9:{res:{sf: .2438786}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:collegesel~y}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1188.838}}}{space 1}{space 1}{ralign 9:{res:{sf: 140.0466}}}{space 1}{space 1}{ralign 9:{res:{sf:      873}}}{space 1}{space 1}{ralign 9:{res:{sf:     1580}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:experience~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 16.20362}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.679871}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.76158}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:experienc~rt}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 94944.93}}}{space 1}{space 1}{ralign 9:{res:{sf: 63426.43}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 318787.5}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:female}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5928854}}}{space 1}{space 1}{ralign 9:{res:{sf: .4922704}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:healthlimi~k}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0237154}}}{space 1}{space 1}{ralign 9:{res:{sf: .1524627}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:graduatede~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3715415}}}{space 1}{space 1}{ralign 9:{res:{sf: .4841746}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:logwageinc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 11.01404}}}{space 1}{space 1}{ralign 9:{res:{sf: .6523119}}}{space 1}{space 1}{ralign 9:{res:{sf: 8.294049}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.70214}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:maritalsta~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5059289}}}{space 1}{space 1}{ralign 9:{res:{sf: .5009559}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+{space 0}{space 0}{ralign 12:wageincome}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 75249.02}}}{space 1}{space 1}{ralign 9:{res:{sf: 59057.93}}}{space 1}{space 1}{ralign 9:{res:{sf:     4000}}}{space 1}{space 1}{ralign 9:{res:{sf:   328451}}}{space 1}{space 1}{ralign 9:{res:{sf:      253}}}{space 1}
+
+{com}. 
+. esttab, ///
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs collabels("Mean" "SD" "Min" "Max" "N")
+{res}
+{txt}{hline 77}
+{txt}                     Mean           SD          Min          Max            N
+{txt}{hline 77}
+{txt}age         {res}        36.92         1.42        35.00        39.00       253.00{txt}
+{txt}asvabperce~e{res}        58.01        24.03         2.99        99.22       253.00{txt}
+{txt}attitudeha~e{res}        24.84         3.09        10.00        28.00       253.00{txt}
+{txt}businessma~t{res}         0.06         0.24         0.00         1.00       253.00{txt}
+{txt}collegesel~y{res}     1,188.84       140.05       873.00     1,580.00       253.00{txt}
+{txt}experience~s{res}        16.20         4.68         0.00        23.76       253.00{txt}
+{txt}experienc~rt{res}    94,944.93    63,426.43         0.00   318,787.47       253.00{txt}
+{txt}female      {res}         0.59         0.49         0.00         1.00       253.00{txt}
+{txt}healthlimi~k{res}         0.02         0.15         0.00         1.00       253.00{txt}
+{txt}graduatede~e{res}         0.37         0.48         0.00         1.00       253.00{txt}
+{txt}logwageinc~e{res}        11.01         0.65         8.29        12.70       253.00{txt}
+{txt}maritalsta~s{res}         0.51         0.50         0.00         1.00       253.00{txt}
+{txt}wageincome  {res}    75,249.02    59,057.93     4,000.00   328,451.00       253.00{txt}
+{txt}{hline 77}
+
+{com}. 
+. *export table as LaTeX file
+. esttab using "./WageDiffMargDescriptives.tex", replace ////
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs booktabs f ///
+>   collabels("Mean" "SD" "Min" "Max" "N")
+{res}{txt}(note: file ./WageDiffMargDescriptives.tex not found)
+(output written to {browse  `"./WageDiffMargDescriptives.tex"'})
+
+{com}.   
+. **create table ouput for marginalized women descriptive statistics
+. tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 0 & female == 1, c(stat) stat(mean sd min max n)
+
+{txt}{ralign 12:variable} {...}
+{c |}      mean        sd       min       max         N
+{hline 13}{c +}{hline 50}
+{ralign 12:age} {...}
+{c |}{...}
+ {res} 36.93333  1.403097        35        39       150
+{txt}{ralign 12:asvabperce~e} {...}
+{c |}{...}
+ {res} 56.35885  23.36891     2.995     99.22       150
+{txt}{ralign 12:attitudeha~e} {...}
+{c |}{...}
+ {res} 24.94667  3.112621        14        28       150
+{txt}{ralign 12:businessma~t} {...}
+{c |}{...}
+ {res} .0466667  .2116305         0         1       150
+{txt}{ralign 12:collegesel~y} {...}
+{c |}{...}
+ {res} 1184.807  141.7237       873      1580       150
+{txt}{ralign 12:experience~s} {...}
+{c |}{...}
+ {res} 16.32741  4.885009         0  23.76158       150
+{txt}{ralign 12:experienc~rt} {...}
+{c |}{...}
+ {res} 99092.59   65104.1         0  318787.5       150
+{txt}{ralign 12:female} {...}
+{c |}{...}
+ {res}        1         0         1         1       150
+{txt}{ralign 12:healthlimi~k} {...}
+{c |}{...}
+ {res}      .02   .140469         0         1       150
+{txt}{ralign 12:graduatede~e} {...}
+{c |}{...}
+ {res} .4333333  .4971957         0         1       150
+{txt}{ralign 12:logwageinc~e} {...}
+{c |}{...}
+ {res} 10.93541  .6667408  8.294049  12.70214       150
+{txt}{ralign 12:maritalsta~s} {...}
+{c |}{...}
+ {res}      .48  .5012735         0         1       150
+{txt}{ralign 12:wageincome} {...}
+{c |}{...}
+ {res} 69959.73  57157.32      4000    328451       150
+{txt}{hline 13}{c BT}{hline 50}
+
+{com}. 
+. ereturn list
+
+{txt}scalars:
+                  e(N) =  {res}253
+
+{txt}macros:
+                e(cmd) : "{res}estpost{txt}"
+             e(subcmd) : "{res}tabstat{txt}"
+              e(stats) : "{res}mean sd min max count{txt}"
+               e(vars) : "{res}age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity{txt}.."
+
+matrices:
+               e(mean) : {res} 1 x 13
+                 {txt}e(sd) : {res} 1 x 13
+                {txt}e(min) : {res} 1 x 13
+                {txt}e(max) : {res} 1 x 13
+              {txt}e(count) : {res} 1 x 13
+{txt}
+{com}. 
+. est clear  // clear the est locals
+{txt}
+{com}. 
+. estpost tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 0 & female == 1, c(stat) stat(mean sd min max n)
+
+{txt}Summary statistics: mean sd min max count
+     for variables: age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(count)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:age}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 36.93333}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.403097}}}{space 1}{space 1}{ralign 9:{res:{sf:       35}}}{space 1}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:asvabperce~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 56.35885}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.36891}}}{space 1}{space 1}{ralign 9:{res:{sf:    2.995}}}{space 1}{space 1}{ralign 9:{res:{sf:    99.22}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:attitudeha~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 24.94667}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.112621}}}{space 1}{space 1}{ralign 9:{res:{sf:       14}}}{space 1}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:businessma~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0466667}}}{space 1}{space 1}{ralign 9:{res:{sf: .2116305}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:collegesel~y}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1184.807}}}{space 1}{space 1}{ralign 9:{res:{sf: 141.7237}}}{space 1}{space 1}{ralign 9:{res:{sf:      873}}}{space 1}{space 1}{ralign 9:{res:{sf:     1580}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:experience~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 16.32741}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.885009}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 23.76158}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:experienc~rt}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 99092.59}}}{space 1}{space 1}{ralign 9:{res:{sf:  65104.1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 318787.5}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:female}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:healthlimi~k}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      .02}}}{space 1}{space 1}{ralign 9:{res:{sf:  .140469}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:graduatede~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .4333333}}}{space 1}{space 1}{ralign 9:{res:{sf: .4971957}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:logwageinc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 10.93541}}}{space 1}{space 1}{ralign 9:{res:{sf: .6667408}}}{space 1}{space 1}{ralign 9:{res:{sf: 8.294049}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.70214}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:maritalsta~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf:      .48}}}{space 1}{space 1}{ralign 9:{res:{sf: .5012735}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+{space 0}{space 0}{ralign 12:wageincome}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 69959.73}}}{space 1}{space 1}{ralign 9:{res:{sf: 57157.32}}}{space 1}{space 1}{ralign 9:{res:{sf:     4000}}}{space 1}{space 1}{ralign 9:{res:{sf:   328451}}}{space 1}{space 1}{ralign 9:{res:{sf:      150}}}{space 1}
+
+{com}. 
+. esttab, ///
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs collabels("Mean" "SD" "Min" "Max" "N")
+{res}
+{txt}{hline 77}
+{txt}                     Mean           SD          Min          Max            N
+{txt}{hline 77}
+{txt}age         {res}        36.93         1.40        35.00        39.00       150.00{txt}
+{txt}asvabperce~e{res}        56.36        23.37         2.99        99.22       150.00{txt}
+{txt}attitudeha~e{res}        24.95         3.11        14.00        28.00       150.00{txt}
+{txt}businessma~t{res}         0.05         0.21         0.00         1.00       150.00{txt}
+{txt}collegesel~y{res}     1,184.81       141.72       873.00     1,580.00       150.00{txt}
+{txt}experience~s{res}        16.33         4.89         0.00        23.76       150.00{txt}
+{txt}experienc~rt{res}    99,092.59    65,104.10         0.00   318,787.47       150.00{txt}
+{txt}female      {res}         1.00         0.00         1.00         1.00       150.00{txt}
+{txt}healthlimi~k{res}         0.02         0.14         0.00         1.00       150.00{txt}
+{txt}graduatede~e{res}         0.43         0.50         0.00         1.00       150.00{txt}
+{txt}logwageinc~e{res}        10.94         0.67         8.29        12.70       150.00{txt}
+{txt}maritalsta~s{res}         0.48         0.50         0.00         1.00       150.00{txt}
+{txt}wageincome  {res}    69,959.73    57,157.32     4,000.00   328,451.00       150.00{txt}
+{txt}{hline 77}
+
+{com}. 
+. *export table as LaTeX file
+. esttab using "./WageDiffMargWomenDescriptives.tex", replace ////
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs booktabs f ///
+>   collabels("Mean" "SD" "Min" "Max" "N") 
+{res}{txt}(note: file ./WageDiffMargWomenDescriptives.tex not found)
+(output written to {browse  `"./WageDiffMargWomenDescriptives.tex"'})
+
+{com}. 
+. **create table ouput for marginalized men descriptive statistics
+. tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 0 & female == 0, c(stat) stat(mean sd min max n)
+
+{txt}{ralign 12:variable} {...}
+{c |}      mean        sd       min       max         N
+{hline 13}{c +}{hline 50}
+{ralign 12:age} {...}
+{c |}{...}
+ {res}  36.8932  1.454625        35        39       103
+{txt}{ralign 12:asvabperce~e} {...}
+{c |}{...}
+ {res} 60.42264  24.88448    12.919    99.018       103
+{txt}{ralign 12:attitudeha~e} {...}
+{c |}{...}
+ {res} 24.67961  3.055736        10        28       103
+{txt}{ralign 12:businessma~t} {...}
+{c |}{...}
+ {res} .0873786    .28377         0         1       103
+{txt}{ralign 12:collegesel~y} {...}
+{c |}{...}
+ {res} 1194.709  138.0445       900      1540       103
+{txt}{ralign 12:experience~s} {...}
+{c |}{...}
+ {res} 16.02334  4.381133         0  22.53419       103
+{txt}{ralign 12:experienc~rt} {...}
+{c |}{...}
+ {res} 88904.66  60706.01         0  257850.2       103
+{txt}{ralign 12:female} {...}
+{c |}{...}
+ {res}        0         0         0         0       103
+{txt}{ralign 12:healthlimi~k} {...}
+{c |}{...}
+ {res} .0291262  .1689826         0         1       103
+{txt}{ralign 12:graduatede~e} {...}
+{c |}{...}
+ {res} .2815534   .451956         0         1       103
+{txt}{ralign 12:logwageinc~e} {...}
+{c |}{...}
+ {res} 11.12854  .6160754  9.798127  12.70214       103
+{txt}{ralign 12:maritalsta~s} {...}
+{c |}{...}
+ {res} .5436893  .5005232         0         1       103
+{txt}{ralign 12:wageincome} {...}
+{c |}{...}
+ {res} 82951.88  61185.24     18000    328451       103
+{txt}{hline 13}{c BT}{hline 50}
+
+{com}. 
+. ereturn list
+
+{txt}scalars:
+                  e(N) =  {res}150
+
+{txt}macros:
+                e(cmd) : "{res}estpost{txt}"
+             e(subcmd) : "{res}tabstat{txt}"
+              e(stats) : "{res}mean sd min max count{txt}"
+               e(vars) : "{res}age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity{txt}.."
+
+matrices:
+               e(mean) : {res} 1 x 13
+                 {txt}e(sd) : {res} 1 x 13
+                {txt}e(min) : {res} 1 x 13
+                {txt}e(max) : {res} 1 x 13
+              {txt}e(count) : {res} 1 x 13
+{txt}
+{com}. 
+. est clear  // clear the est locals
+{txt}
+{com}. 
+. estpost tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 0 & female == 0, c(stat) stat(mean sd min max n)
+
+{txt}Summary statistics: mean sd min max count
+     for variables: age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(count)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:age}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  36.8932}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.454625}}}{space 1}{space 1}{ralign 9:{res:{sf:       35}}}{space 1}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:asvabperce~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 60.42264}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.88448}}}{space 1}{space 1}{ralign 9:{res:{sf:   12.919}}}{space 1}{space 1}{ralign 9:{res:{sf:   99.018}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:attitudeha~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 24.67961}}}{space 1}{space 1}{ralign 9:{res:{sf: 3.055736}}}{space 1}{space 1}{ralign 9:{res:{sf:       10}}}{space 1}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:businessma~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0873786}}}{space 1}{space 1}{ralign 9:{res:{sf:   .28377}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:collegesel~y}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1194.709}}}{space 1}{space 1}{ralign 9:{res:{sf: 138.0445}}}{space 1}{space 1}{ralign 9:{res:{sf:      900}}}{space 1}{space 1}{ralign 9:{res:{sf:     1540}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:experience~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 16.02334}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.381133}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 22.53419}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:experienc~rt}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 88904.66}}}{space 1}{space 1}{ralign 9:{res:{sf: 60706.01}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 257850.2}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:female}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:healthlimi~k}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0291262}}}{space 1}{space 1}{ralign 9:{res:{sf: .1689826}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:graduatede~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .2815534}}}{space 1}{space 1}{ralign 9:{res:{sf:  .451956}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:logwageinc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 11.12854}}}{space 1}{space 1}{ralign 9:{res:{sf: .6160754}}}{space 1}{space 1}{ralign 9:{res:{sf: 9.798127}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.70214}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:maritalsta~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .5436893}}}{space 1}{space 1}{ralign 9:{res:{sf: .5005232}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+{space 0}{space 0}{ralign 12:wageincome}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 82951.88}}}{space 1}{space 1}{ralign 9:{res:{sf: 61185.24}}}{space 1}{space 1}{ralign 9:{res:{sf:    18000}}}{space 1}{space 1}{ralign 9:{res:{sf:   328451}}}{space 1}{space 1}{ralign 9:{res:{sf:      103}}}{space 1}
+
+{com}. 
+. esttab, ///
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs collabels("Mean" "SD" "Min" "Max" "N")
+{res}
+{txt}{hline 77}
+{txt}                     Mean           SD          Min          Max            N
+{txt}{hline 77}
+{txt}age         {res}        36.89         1.45        35.00        39.00       103.00{txt}
+{txt}asvabperce~e{res}        60.42        24.88        12.92        99.02       103.00{txt}
+{txt}attitudeha~e{res}        24.68         3.06        10.00        28.00       103.00{txt}
+{txt}businessma~t{res}         0.09         0.28         0.00         1.00       103.00{txt}
+{txt}collegesel~y{res}     1,194.71       138.04       900.00     1,540.00       103.00{txt}
+{txt}experience~s{res}        16.02         4.38         0.00        22.53       103.00{txt}
+{txt}experienc~rt{res}    88,904.66    60,706.01         0.00   257,850.19       103.00{txt}
+{txt}female      {res}         0.00         0.00         0.00         0.00       103.00{txt}
+{txt}healthlimi~k{res}         0.03         0.17         0.00         1.00       103.00{txt}
+{txt}graduatede~e{res}         0.28         0.45         0.00         1.00       103.00{txt}
+{txt}logwageinc~e{res}        11.13         0.62         9.80        12.70       103.00{txt}
+{txt}maritalsta~s{res}         0.54         0.50         0.00         1.00       103.00{txt}
+{txt}wageincome  {res}    82,951.88    61,185.24    18,000.00   328,451.00       103.00{txt}
+{txt}{hline 77}
+
+{com}. 
+. *export table as LaTeX file
+. esttab using "./WageDiffMargMenDescriptives.tex", replace ////
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs booktabs f ///
+>   collabels("Mean" "SD" "Min" "Max" "N") 
+{res}{txt}(note: file ./WageDiffMargMenDescriptives.tex not found)
+(output written to {browse  `"./WageDiffMargMenDescriptives.tex"'})
+
+{com}. 
+. **create table ouput for white women descriptive statistics
+. tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 1 & female == 1, c(stat) stat(mean sd min max n)
+
+{txt}{ralign 12:variable} {...}
+{c |}      mean        sd       min       max         N
+{hline 13}{c +}{hline 50}
+{ralign 12:age} {...}
+{c |}{...}
+ {res} 36.91374  1.385214        35        39       313
+{txt}{ralign 12:asvabperce~e} {...}
+{c |}{...}
+ {res}  73.1261  20.00003    12.912       100       313
+{txt}{ralign 12:attitudeha~e} {...}
+{c |}{...}
+ {res} 24.69329  2.827609        14        28       313
+{txt}{ralign 12:businessma~t} {...}
+{c |}{...}
+ {res} .0798722  .2715294         0         1       313
+{txt}{ralign 12:collegesel~y} {...}
+{c |}{...}
+ {res} 1231.029  123.0952       910      1580       313
+{txt}{ralign 12:experience~s} {...}
+{c |}{...}
+ {res} 17.37511  4.176084  .8246553  24.18349       313
+{txt}{ralign 12:experienc~rt} {...}
+{c |}{...}
+ {res} 115880.6  71577.35  .4624766  342039.5       313
+{txt}{ralign 12:female} {...}
+{c |}{...}
+ {res}        1         0         1         1       313
+{txt}{ralign 12:healthlimi~k} {...}
+{c |}{...}
+ {res} .0319489  .1761456         0         1       313
+{txt}{ralign 12:graduatede~e} {...}
+{c |}{...}
+ {res} .3929712  .4891926         0         1       313
+{txt}{ralign 12:logwageinc~e} {...}
+{c |}{...}
+ {res} 10.84875  .9346449  5.298317  12.70214       313
+{txt}{ralign 12:maritalsta~s} {...}
+{c |}{...}
+ {res} .6805112  .4670252         0         1       313
+{txt}{ralign 12:wageincome} {...}
+{c |}{...}
+ {res} 70589.36  58773.94       200    328451       313
+{txt}{hline 13}{c BT}{hline 50}
+
+{com}. 
+. ereturn list
+
+{txt}scalars:
+                  e(N) =  {res}103
+
+{txt}macros:
+                e(cmd) : "{res}estpost{txt}"
+             e(subcmd) : "{res}tabstat{txt}"
+              e(stats) : "{res}mean sd min max count{txt}"
+               e(vars) : "{res}age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity{txt}.."
+
+matrices:
+               e(mean) : {res} 1 x 13
+                 {txt}e(sd) : {res} 1 x 13
+                {txt}e(min) : {res} 1 x 13
+                {txt}e(max) : {res} 1 x 13
+              {txt}e(count) : {res} 1 x 13
+{txt}
+{com}. 
+. est clear  // clear the est locals
+{txt}
+{com}. 
+. estpost tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 1 & female == 1, c(stat) stat(mean sd min max n)
+
+{txt}Summary statistics: mean sd min max count
+     for variables: age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(count)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:age}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 36.91374}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.385214}}}{space 1}{space 1}{ralign 9:{res:{sf:       35}}}{space 1}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:asvabperce~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf:  73.1261}}}{space 1}{space 1}{ralign 9:{res:{sf: 20.00003}}}{space 1}{space 1}{ralign 9:{res:{sf:   12.912}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:attitudeha~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 24.69329}}}{space 1}{space 1}{ralign 9:{res:{sf: 2.827609}}}{space 1}{space 1}{ralign 9:{res:{sf:       14}}}{space 1}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:businessma~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0798722}}}{space 1}{space 1}{ralign 9:{res:{sf: .2715294}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:collegesel~y}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1231.029}}}{space 1}{space 1}{ralign 9:{res:{sf: 123.0952}}}{space 1}{space 1}{ralign 9:{res:{sf:      910}}}{space 1}{space 1}{ralign 9:{res:{sf:     1580}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:experience~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 17.37511}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.176084}}}{space 1}{space 1}{ralign 9:{res:{sf: .8246553}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.18349}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:experienc~rt}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 115880.6}}}{space 1}{space 1}{ralign 9:{res:{sf: 71577.35}}}{space 1}{space 1}{ralign 9:{res:{sf: .4624766}}}{space 1}{space 1}{ralign 9:{res:{sf: 342039.5}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:female}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:healthlimi~k}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0319489}}}{space 1}{space 1}{ralign 9:{res:{sf: .1761456}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:graduatede~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3929712}}}{space 1}{space 1}{ralign 9:{res:{sf: .4891926}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:logwageinc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 10.84875}}}{space 1}{space 1}{ralign 9:{res:{sf: .9346449}}}{space 1}{space 1}{ralign 9:{res:{sf: 5.298317}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.70214}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:maritalsta~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .6805112}}}{space 1}{space 1}{ralign 9:{res:{sf: .4670252}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+{space 0}{space 0}{ralign 12:wageincome}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 70589.36}}}{space 1}{space 1}{ralign 9:{res:{sf: 58773.94}}}{space 1}{space 1}{ralign 9:{res:{sf:      200}}}{space 1}{space 1}{ralign 9:{res:{sf:   328451}}}{space 1}{space 1}{ralign 9:{res:{sf:      313}}}{space 1}
+
+{com}. 
+. esttab, ///
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs collabels("Mean" "SD" "Min" "Max" "N")
+{res}
+{txt}{hline 77}
+{txt}                     Mean           SD          Min          Max            N
+{txt}{hline 77}
+{txt}age         {res}        36.91         1.39        35.00        39.00       313.00{txt}
+{txt}asvabperce~e{res}        73.13        20.00        12.91       100.00       313.00{txt}
+{txt}attitudeha~e{res}        24.69         2.83        14.00        28.00       313.00{txt}
+{txt}businessma~t{res}         0.08         0.27         0.00         1.00       313.00{txt}
+{txt}collegesel~y{res}     1,231.03       123.10       910.00     1,580.00       313.00{txt}
+{txt}experience~s{res}        17.38         4.18         0.82        24.18       313.00{txt}
+{txt}experienc~rt{res}   115,880.61    71,577.35         0.46   342,039.47       313.00{txt}
+{txt}female      {res}         1.00         0.00         1.00         1.00       313.00{txt}
+{txt}healthlimi~k{res}         0.03         0.18         0.00         1.00       313.00{txt}
+{txt}graduatede~e{res}         0.39         0.49         0.00         1.00       313.00{txt}
+{txt}logwageinc~e{res}        10.85         0.93         5.30        12.70       313.00{txt}
+{txt}maritalsta~s{res}         0.68         0.47         0.00         1.00       313.00{txt}
+{txt}wageincome  {res}    70,589.36    58,773.94       200.00   328,451.00       313.00{txt}
+{txt}{hline 77}
+
+{com}. 
+. *export table as LaTeX file
+. esttab using "./WageDiffWhiteWomenDescriptives.tex", replace ////
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs booktabs f ///
+>   collabels("Mean" "SD" "Min" "Max" "N")
+{res}{txt}(note: file ./WageDiffWhiteWomenDescriptives.tex not found)
+(output written to {browse  `"./WageDiffWhiteWomenDescriptives.tex"'})
+
+{com}.   
+. **create table ouput for white men descriptive statistics
+. tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 1 & female == 0, c(stat) stat(mean sd min max n)
+
+{txt}{ralign 12:variable} {...}
+{c |}      mean        sd       min       max         N
+{hline 13}{c +}{hline 50}
+{ralign 12:age} {...}
+{c |}{...}
+ {res} 36.86458  1.376405        35        39       288
+{txt}{ralign 12:asvabperce~e} {...}
+{c |}{...}
+ {res} 78.10948  18.99326    18.182       100       288
+{txt}{ralign 12:attitudeha~e} {...}
+{c |}{...}
+ {res} 24.15972   3.01486        14        28       288
+{txt}{ralign 12:businessma~t} {...}
+{c |}{...}
+ {res} .0763889  .2660817         0         1       288
+{txt}{ralign 12:collegesel~y} {...}
+{c |}{...}
+ {res} 1254.097  122.7974       940      1590       288
+{txt}{ralign 12:experience~s} {...}
+{c |}{...}
+ {res} 16.81281  4.199585         0  24.72048       288
+{txt}{ralign 12:experienc~rt} {...}
+{c |}{...}
+ {res} 103653.2  67550.12         0  373445.8       288
+{txt}{ralign 12:female} {...}
+{c |}{...}
+ {res}        0         0         0         0       288
+{txt}{ralign 12:healthlimi~k} {...}
+{c |}{...}
+ {res} .0104167  .1017058         0         1       288
+{txt}{ralign 12:graduatede~e} {...}
+{c |}{...}
+ {res} .3402778  .4746272         0         1       288
+{txt}{ralign 12:logwageinc~e} {...}
+{c |}{...}
+ {res} 11.35843  .6595696  8.160519  12.70214       288
+{txt}{ralign 12:maritalsta~s} {...}
+{c |}{...}
+ {res} .7326389  .4433527         0         1       288
+{txt}{ralign 12:wageincome} {...}
+{c |}{...}
+ {res} 106471.6  79442.99      3500    328451       288
+{txt}{hline 13}{c BT}{hline 50}
+
+{com}. 
+. ereturn list
+
+{txt}scalars:
+                  e(N) =  {res}313
+
+{txt}macros:
+                e(cmd) : "{res}estpost{txt}"
+             e(subcmd) : "{res}tabstat{txt}"
+              e(stats) : "{res}mean sd min max count{txt}"
+               e(vars) : "{res}age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity{txt}.."
+
+matrices:
+               e(mean) : {res} 1 x 13
+                 {txt}e(sd) : {res} 1 x 13
+                {txt}e(min) : {res} 1 x 13
+                {txt}e(max) : {res} 1 x 13
+              {txt}e(count) : {res} 1 x 13
+{txt}
+{com}. 
+. est clear  // clear the est locals
+{txt}
+{com}. 
+. estpost tabstat age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome if white == 1 & female == 0, c(stat) stat(mean sd min max n)
+
+{txt}Summary statistics: mean sd min max count
+     for variables: age asvabpercentile attitudehardworkscore businessmarketingmanagement collegeselectivity experienceyears experienceyearsquart female healthlimitswork graduatedegree logwageincome maritalstatus wageincome
+
+{space 0}{space 0}{ralign 12:}{space 1}{c |}{space 1}{ralign 9:e(mean)}{space 1}{space 1}{ralign 9:e(sd)}{space 1}{space 1}{ralign 9:e(min)}{space 1}{space 1}{ralign 9:e(max)}{space 1}{space 1}{ralign 9:e(count)}{space 1}
+{space 0}{hline 13}{c   +}{hline 11}{hline 11}{hline 11}{hline 11}{hline 11}
+{space 0}{space 0}{ralign 12:age}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 36.86458}}}{space 1}{space 1}{ralign 9:{res:{sf: 1.376405}}}{space 1}{space 1}{ralign 9:{res:{sf:       35}}}{space 1}{space 1}{ralign 9:{res:{sf:       39}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:asvabperce~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 78.10948}}}{space 1}{space 1}{ralign 9:{res:{sf: 18.99326}}}{space 1}{space 1}{ralign 9:{res:{sf:   18.182}}}{space 1}{space 1}{ralign 9:{res:{sf:      100}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:attitudeha~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 24.15972}}}{space 1}{space 1}{ralign 9:{res:{sf:  3.01486}}}{space 1}{space 1}{ralign 9:{res:{sf:       14}}}{space 1}{space 1}{ralign 9:{res:{sf:       28}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:businessma~t}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0763889}}}{space 1}{space 1}{ralign 9:{res:{sf: .2660817}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:collegesel~y}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 1254.097}}}{space 1}{space 1}{ralign 9:{res:{sf: 122.7974}}}{space 1}{space 1}{ralign 9:{res:{sf:      940}}}{space 1}{space 1}{ralign 9:{res:{sf:     1590}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:experience~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 16.81281}}}{space 1}{space 1}{ralign 9:{res:{sf: 4.199585}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 24.72048}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:experienc~rt}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 103653.2}}}{space 1}{space 1}{ralign 9:{res:{sf: 67550.12}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf: 373445.8}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:female}{space 1}{c |}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:healthlimi~k}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .0104167}}}{space 1}{space 1}{ralign 9:{res:{sf: .1017058}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:graduatede~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .3402778}}}{space 1}{space 1}{ralign 9:{res:{sf: .4746272}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:logwageinc~e}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 11.35843}}}{space 1}{space 1}{ralign 9:{res:{sf: .6595696}}}{space 1}{space 1}{ralign 9:{res:{sf: 8.160519}}}{space 1}{space 1}{ralign 9:{res:{sf: 12.70214}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:maritalsta~s}{space 1}{c |}{space 1}{ralign 9:{res:{sf: .7326389}}}{space 1}{space 1}{ralign 9:{res:{sf: .4433527}}}{space 1}{space 1}{ralign 9:{res:{sf:        0}}}{space 1}{space 1}{ralign 9:{res:{sf:        1}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+{space 0}{space 0}{ralign 12:wageincome}{space 1}{c |}{space 1}{ralign 9:{res:{sf: 106471.6}}}{space 1}{space 1}{ralign 9:{res:{sf: 79442.99}}}{space 1}{space 1}{ralign 9:{res:{sf:     3500}}}{space 1}{space 1}{ralign 9:{res:{sf:   328451}}}{space 1}{space 1}{ralign 9:{res:{sf:      288}}}{space 1}
+
+{com}. 
+. esttab, ///
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs collabels("Mean" "SD" "Min" "Max" "N")
+{res}
+{txt}{hline 77}
+{txt}                     Mean           SD          Min          Max            N
+{txt}{hline 77}
+{txt}age         {res}        36.86         1.38        35.00        39.00       288.00{txt}
+{txt}asvabperce~e{res}        78.11        18.99        18.18       100.00       288.00{txt}
+{txt}attitudeha~e{res}        24.16         3.01        14.00        28.00       288.00{txt}
+{txt}businessma~t{res}         0.08         0.27         0.00         1.00       288.00{txt}
+{txt}collegesel~y{res}     1,254.10       122.80       940.00     1,590.00       288.00{txt}
+{txt}experience~s{res}        16.81         4.20         0.00        24.72       288.00{txt}
+{txt}experienc~rt{res}   103,653.20    67,550.12         0.00   373,445.81       288.00{txt}
+{txt}female      {res}         0.00         0.00         0.00         0.00       288.00{txt}
+{txt}healthlimi~k{res}         0.01         0.10         0.00         1.00       288.00{txt}
+{txt}graduatede~e{res}         0.34         0.47         0.00         1.00       288.00{txt}
+{txt}logwageinc~e{res}        11.36         0.66         8.16        12.70       288.00{txt}
+{txt}maritalsta~s{res}         0.73         0.44         0.00         1.00       288.00{txt}
+{txt}wageincome  {res}   106,471.61    79,442.99     3,500.00   328,451.00       288.00{txt}
+{txt}{hline 77}
+
+{com}. 
+. *export table as LaTeX file
+. esttab using "./WageDiffWhiteMenDescriptives.tex", replace ////
+>  cells("mean(fmt(%13.2fc)) sd(fmt(%13.2fc)) min max count") nonumber ///
+>   nomtitle nonote noobs booktabs f ///
+>   collabels("Mean" "SD" "Min" "Max" "N") 
+{res}{txt}(note: file ./WageDiffWhiteMenDescriptives.tex not found)
+(output written to {browse  `"./WageDiffWhiteMenDescriptives.tex"'})
+
+{com}. 
+.   
+.  
+.  
+. 
+{txt}end of do-file
+
+{com}. exit, clear

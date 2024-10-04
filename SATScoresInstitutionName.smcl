@@ -1,0 +1,48 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\SATScoresInstitutionName.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 7 Feb 2022, 16:56:30
+{txt}
+{com}. 
+. *Define the directory
+. global PATH "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles"
+{txt}
+{com}. cd $PATH
+{res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\dofiles_dtafiles
+{txt}
+{com}. 
+. *Open data downloaded from IPEDS on SAT scores by institution
+. import delimited "C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\rawdata\SATScoresInstitutionName.csv"
+{res}{text}(5 vars, 321 obs)
+
+{com}. 
+. *drop v5
+. drop v5
+{txt}
+{com}. 
+. *rename variables to prepare dataset for merge and creation of college selectivity variable
+. 
+. rename satmath75thpercentilescoreadm201 satmath75p
+{res}{txt}
+{com}. 
+. rename satcriticalreading75thpercentile satreadwrite75p
+{res}{txt}
+{com}. 
+. rename unitid college 
+{res}{txt}
+{com}. 
+. *save dataset
+. save "SATScoresInstitutionName.dta"
+{txt}file SATScoresInstitutionName.dta saved
+
+{com}. 
+. log close 
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\jcoger\Documents\Essay2\NLSY97WageDifferentialsV1\logfiles\SATScoresInstitutionName.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 7 Feb 2022, 16:56:30
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
